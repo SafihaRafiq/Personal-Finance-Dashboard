@@ -11,7 +11,7 @@ Step 1: Create database called spending_data in Postgres
 Step 2: Run db_script.py to load data into database (csvs must be in same path). This creates the historical records database
 Step 3: Run app.py and run on localhost web path to view dashboard
 
-<img width="835" alt="Screenshot 2024-01-08 at 5 42 30 PM" src="https://github.com/rxshmi-p/PersonalFinanceDash/assets/86248667/c70d7679-8060-42ef-b7fd-5cb3a16f3a6b">
+
 
 
 ## How to Run 
