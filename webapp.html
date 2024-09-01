@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Budget Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+        legend {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .container {
+            margin-bottom: 20px;
+        }
+        .container h1 {
+            margin-bottom: 10px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Input New Entry:</h1>
+    <form action="/new_entry" method="post">
+        <fieldset>
+            <legend>New Entry Form</legend>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br><br>
+
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required><br><br>
+
+            <label for="type">Type:</label>
+            <select id="type" name="type" required>
+                <option value="takeout">Takeout</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="house">House</option>
+                <option value="school">School</option>
+                <option value="grocery">Grocery</option>
+                <option value="shopping">Shopping</option>
+                <option value="other">Other</option>
+            </select><br><br>
+
+            <label for="amount_spent">Amount Spent:</label>
+            <input type="number" id="amount_spent" name="amount_spent" step="0.01" min="0" required><br><br>
+
+            <label for="credit_debit">Credit/Debit:</label>
+            <select id="credit_debit" name="credit_debit" required>
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+            </select><br><br>
+
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+
+    <div class="container">
+        <h1>Spending in {{ month_year }}:</h1>
+        <form action="/filtered_table" method="post">
+            <label for="month_year">Select Month:</label>
+            <input type="month" id="month_year" name="month_year" value="{{ month_year }}" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount Spent</th>
+                    <th>Credit/Debit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                    <tr>
+                        <td>{{ row.date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ row.description }}</td>
+                        <td>{{ row.type }}</td>
+                        <td>{{ row.amount_spent }}</td>
+                        <td>{{ row.credit_debit }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2>Expected Spending This Month: {{ exp_spent }}</h2>
+        <img src="templates/fig1.jpeg" alt="Spending Chart">
+    </div>
+</body>
+</html>
